@@ -5,7 +5,6 @@ import json
 import time
 import sys
 import datetime
-import pandas
 import time
 import requests
 from lxml.etree import fromstring
