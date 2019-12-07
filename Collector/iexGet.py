@@ -13,9 +13,6 @@ from yahoo_earnings_calendar import YahooEarningsCalendar
 import numpy as np
 import os
 
-path = "/home/wc/Desktop/Trader/"
-
-print(path)
 
 #get data from bloomberg
 def get_data(url):
@@ -102,16 +99,6 @@ fin_analysis["priceToBook"] = fin_analysis["priceToBook"].fillna(value = -1)
 fin_analysis["priceToSales"] = fin_analysis["priceToSales"].fillna(value = -1)
 fin_analysis["debt"] = fin_analysis["debt"].fillna(value = -1)
 fin_analysis["day5ChangePercent"] = fin_analysis["day5ChangePercent"].fillna(value = -1)
-
-
-##filter the data based on the ten rules of investing by benjamin graham
-# fin_analysis = fin_analysis[fin_analysis["epsEstimate"] > 0 ]
-# fin_analysis = fin_analysis[(fin_analysis["price"] < 50) & (fin_analysis["price"] > 0)]
-# fin_analysis = fin_analysis[(fin_analysis["peRatio"] < 11) & (fin_analysis["peRatio"] != -1)]
-# fin_analysis = fin_analysis[fin_analysis["priceToBook"] < 10]
-# fin_analysis = fin_analysis[fin_analysis["priceToSales"] < 10 & (fin_analysis["priceToSales"] > 0)]
-# fin_analysis = fin_analysis[fin_analysis["debt"] > 0]
-# fin_analysis = fin_analysis[fin_analysis["day5ChangePercent"] > 0]
 
 
 fin_analysis.to_csv("/Users/wfclark/Desktop/final_analysis.csv")
