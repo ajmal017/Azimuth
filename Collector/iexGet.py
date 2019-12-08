@@ -108,4 +108,4 @@ fin_analysis["debt"] = fin_analysis["debt"].fillna(value = -1)
 fin_analysis["day5ChangePercent"] = fin_analysis["day5ChangePercent"].fillna(value = -1)
 
 
-fin_analysis.to_csv("/Users/wfclark/Desktop/iex_raw_metrics-.csv")
+fin_analysis.to_csv(path + "/Collector/Raw/iex_raw_metrics-.csv")
