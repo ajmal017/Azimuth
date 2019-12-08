@@ -9,11 +9,10 @@ import time
 import requests
 from yahoo_earnings_calendar import YahooEarningsCalendar
 import numpy as np
-
 import os
+
 today = datetime.date.today()
 
-print(today)
 
 print()
 

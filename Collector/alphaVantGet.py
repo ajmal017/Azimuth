@@ -16,8 +16,8 @@ def save_dataset(symbol, time_window):
     elif time_window == 'daily_adj':
         data, meta_data = ts.get_daily_adjusted(symbol, outputsize='full')
 
-    pprint(data.head(10))
-
+    pprint(data.head(10)) 
+ 
     data.to_csv(f'./{symbol}_{time_window}.csv')
 
 
