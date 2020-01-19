@@ -19,6 +19,16 @@ print()
 
 path = os.getcwd()
 
+<<<<<<< HEAD
+=======
+today = datetime.date.today()
+
+
+print()
+
+path = os.getcwd()
+
+>>>>>>> 6bc35449edc907a00de6bf769661101fe15c214d
 print(path)
 
 #get data from bloomberg
@@ -108,4 +118,8 @@ fin_analysis["debt"] = fin_analysis["debt"].fillna(value = -1)
 fin_analysis["day5ChangePercent"] = fin_analysis["day5ChangePercent"].fillna(value = -1)
 
 
+<<<<<<< HEAD
 fin_analysis.to_csv("/Users/wfclark/Desktop/iex_raw_metrics-.csv")
+=======
+fin_analysis.to_csv(path + "/Collector/Raw/iex_raw_metrics-.csv")
+>>>>>>> 6bc35449edc907a00de6bf769661101fe15c214d
