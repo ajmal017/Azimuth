@@ -3,7 +3,6 @@ from pprint import pprint
 import json
 import argparse
 
-
 def save_dataset(symbol, time_window):
     api_key = 'XLROCXVZE0N7TXKU'
     print(symbol, time_window)
@@ -19,7 +18,7 @@ def save_dataset(symbol, time_window):
     pprint(data.head(10))
 
     data.to_csv(f'./{symbol}_{time_window}.csv')
-
+  
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

@@ -16,11 +16,15 @@ def csv_to_dataset(csv_path):
     data_normalised = data_normaliser.fit_transform(data)
 
     # using the last {history_points} open close high low volume data points, predict the next open value
-    ohlcv_histories_normalised = np.array([data_normalised[i:i + history_points].copy() for i in range(len(data_normalised) - history_points)])
-    next_day_open_values_normalised = np.array([data_normalised[:, 0][i + history_points].copy() for i in range(len(data_normalised) - history_points)])
-    next_day_open_values_normalised = np.expand_dims(next_day_open_values_normalised, -1)
+    ohlcv_histories_normalised = np.array(
+        [data_normalised[i:i + history_points].copy() for i in range(len(data_normalised) - history_points)])
+    next_day_open_values_normalised = np.array(
+        [data_normalised[:, 0][i + history_points].copy() for i in range(len(data_normalised) - history_points)])
+    next_day_open_values_normalised = np.expand_dims(
+        next_day_open_values_normalised, -1)
 
-    next_day_open_values = np.array([data[:, 0][i + history_points].copy() for i in range(len(data) - history_points)])
+    next_day_open_values = np.array(
+        [data[:, 0][i + history_points].copy() for i in range(len(data) - history_points)])
     next_day_open_values = np.expand_dims(next_day_open_values, -1)
 
     y_normaliser = preprocessing.MinMaxScaler()
@@ -47,9 +51,11 @@ def csv_to_dataset(csv_path):
     technical_indicators = np.array(technical_indicators)
 
     tech_ind_scaler = preprocessing.MinMaxScaler()
-    technical_indicators_normalised = tech_ind_scaler.fit_transform(technical_indicators)
+    technical_indicators_normalised = tech_ind_scaler.fit_transform(
+        technical_indicators)
 
-    assert ohlcv_histories_normalised.shape[0] == next_day_open_values_normalised.shape[0] == technical_indicators_normalised.shape[0]
+    assert ohlcv_histories_normalised.shape[0] == next_day_open_values_normalised.shape[
+        0] == technical_indicators_normalised.shape[0]
     return ohlcv_histories_normalised, technical_indicators_normalised, next_day_open_values_normalised, next_day_open_values, y_normaliser
 
 
@@ -62,17 +68,21 @@ def multiple_csv_to_dataset(test_set_name):
         if not csv_file_path == test_set_name:
             print(csv_file_path)
             if type(ohlcv_histories) == int:
-                ohlcv_histories, technical_indicators, next_day_open_values, _, _ = csv_to_dataset(csv_file_path)
+                ohlcv_histories, technical_indicators, next_day_open_values, _, _ = csv_to_dataset(
+                    csv_file_path)
             else:
                 a, b, c, _, _ = csv_to_dataset(csv_file_path)
                 ohlcv_histories = np.concatenate((ohlcv_histories, a), 0)
-                technical_indicators = np.concatenate((technical_indicators, b), 0)
-                next_day_open_values = np.concatenate((next_day_open_values, c), 0)
+                technical_indicators = np.concatenate(
+                    (technical_indicators, b), 0)
+                next_day_open_values = np.concatenate(
+                    (next_day_open_values, c), 0)
 
     ohlcv_train = ohlcv_histories
     tech_ind_train = technical_indicators
     y_train = next_day_open_values
 
-    ohlcv_test, tech_ind_test, y_test, unscaled_y_test, y_normaliser = csv_to_dataset(test_set_name)
+    ohlcv_test, tech_ind_test, y_test, unscaled_y_test, y_normaliser = csv_to_dataset(
+        test_set_name)
 
     return ohlcv_train, tech_ind_train, y_train, ohlcv_test, tech_ind_test, y_test, unscaled_y_test, y_normaliser

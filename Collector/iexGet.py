@@ -5,14 +5,21 @@ import json
 import time
 import sys
 import datetime
-import pandas
 import time
 import requests
-from lxml.etree import fromstring
 from yahoo_earnings_calendar import YahooEarningsCalendar
 import numpy as np
-import os
 
+import os
+today = datetime.date.today()
+
+print(today)
+
+print()
+
+path = os.getcwd()
+
+print(path)
 
 #get data from bloomberg
 def get_data(url):
@@ -101,4 +108,4 @@ fin_analysis["debt"] = fin_analysis["debt"].fillna(value = -1)
 fin_analysis["day5ChangePercent"] = fin_analysis["day5ChangePercent"].fillna(value = -1)
 
 
-fin_analysis.to_csv("/Users/wfclark/Desktop/final_analysis.csv")
+fin_analysis.to_csv("/Users/wfclark/Desktop/iex_raw_metrics-.csv")
