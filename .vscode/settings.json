@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/home/wc/anaconda3/envs/PythonGPU/bin/python",
+    "python.pythonPath": "/home/wc/anaconda3/envs/Azimuth/bin/python",
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
     "python.linting.banditEnabled": false
