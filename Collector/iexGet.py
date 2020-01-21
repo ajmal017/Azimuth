@@ -15,18 +15,11 @@ today = datetime.date.today()
 
 print(today)
 
-print()
-
 path = os.getcwd()
 
 today = datetime.date.today()
 
-
-print()
-
 path = os.getcwd()
-
-print(path)
 
 #get data from bloomberg
 def get_data(url):
@@ -117,4 +110,3 @@ fin_analysis["day5ChangePercent"] = fin_analysis["day5ChangePercent"].fillna(val
 
 
 fin_analysis.to_csv(path + "/Collector/Raw/iex_raw_metrics-.csv")
->>>>>>> 6bc35449edc907a00de6bf769661101fe15c214d
