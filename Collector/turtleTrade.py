@@ -78,7 +78,7 @@ def strategy_performance(stock_ticker):
     daily_log_returns = daily_log_returns * stock.Signal.shift(1)  
   
     # Plot the distribution of 'daily_log_returns'  
-    print stock_ticker  
+    print(stock_ticker)
     daily_log_returns.hist(bins=50)  
     plt.show()  
     return daily_log_returns.cumsum() 
@@ -92,7 +92,7 @@ for stock in portfolio:
     cum_daily_return[stock] = strategy_performance(stock)  
 
 # Plot the cumulative daily returns  
-print "Cumulative Daily Returns"  
+print("Cumulative Daily Returns")
 cum_daily_return.plot()  
 # Show the plot  
 plt.show()  
