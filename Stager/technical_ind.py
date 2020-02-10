@@ -43,7 +43,6 @@ import datetime
 import seaborn as sns
 
 import matplotlib.pyplot as plt
-%matplotlib inline
 from sklearn.decomposition import PCA
 
 import math
@@ -131,3 +130,7 @@ def plot_technical_indicators(dataset, last_days):
     plt.show()
 
 plot_technical_indicators(dataset_TI_df, 400)
+
+
+
+tags = ["PreferredStockValue", "AssetsCurrent", "Liabilities", "EarningsPerShareBasic", "CommonStockSharesOutstanding", "LiabilitiesCurrent", "EarningsPerShareBasic", "SharePrice", "StockholdersEquity", "PreferredStockValue", "CommonStockSharesOutstanding", "NetIncomeLoss", "GrossProfit", "SalesRevenueNet",'StockRepurchasedAndRetiredDuringPeriodShares']
