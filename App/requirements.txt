@@ -1,0 +1,14 @@
+flask
+dash
+dash_core_components
+dash_html_components
+
+lxml
+requests
+matplotlib
+newsapi
+
+pandas
+plotly
+
+sd_material_ui
