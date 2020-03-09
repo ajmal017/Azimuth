@@ -10,16 +10,63 @@ import requests
 from yahoo_earnings_calendar import YahooEarningsCalendar
 import numpy as np
 import os
+import requests as r 
 
-today = datetime.date.today()
+def get_income_q(t):
+    req = r.get("https://financialmodelingprep.com/api/v3/financials/income-statement/" + t + "?period=quarter")
+    return json.loads(req.text)
+    
 
-print(today)
+def get_balancesheets_q(t):
+    req = r.get("https://financialmodelingprep.com/api/v3/financials/balance-sheet-statement/" + t + "?period=quarter")
+    return json.loads(req.text)
 
-path = os.getcwd()
 
-today = datetime.date.today()
+def get_cashflow_q(t):
+    req = r.get("https://financialmodelingprep.com/api/v3/financials/cash-flow-statement/" + t + "?period=quarter")
+    return json.loads(req.text)
 
-path = os.getcwd()
+
+def get_ev_q(t):
+    req = r.get("https://financialmodelingprep.com/api/v3/enterprise-value/" + t + "?period=quarter")
+    return json.loads(req.text)
+
+
+def get_metrics_q(t):
+    req = r.get("https://financialmodelingprep.com/api/v3/company-key-metrics/" + t + "?period=quarter")
+    return json.loads(req.text)
+
+def get_comp_profile(t):
+    req = r.get("https://financialmodelingprep.com/api/v3/company/profile/" + t)
+    return json.loads(req.text)
+
+
+def get_valuation(t):
+    metric_data_q = get_metrics_q(t)['metrics'][0]
+    income_data_q = get_income_q(t)['financials'][0]
+    profile_data_q = get_comp_profile(t)['profile']
+    balance_data_q = get_balancesheets_q(t)['financials'][0]
+    value_metrics =  {
+                "ticker": t,
+                "price": profile_data_q['price'],
+                "p_e": metric_data_q["PE ratio"],
+                "p_b": metric_data_q["PB ratio"],
+                "p_s": metric_data_q["Price to Sales Ratio"],
+                "sharesoutsanding": income_data_q['Weighted Average Shs Out'],
+                "eps": income_data_q["EPS"], 
+                "net_debt": balance_data_q['Net Debt'],
+                "ncavps": (balance_data_q['Total current assets'] - balance_data_q['Total current liabialities']) / float(income_data_q['Weighted Average Shs Out']),
+                "debt_to_asset": metric_data_q['Debt to Assets'],
+                "p_eps":profile_data_q['price'] /  income_data_q["EPS"],
+                "gross_profit": income_data_q["Gross Margin"],
+                "revenue_earnings": income_data_q['Net Income'] / balance_data_q["Total shareholders equity"]
+                
+            }
+    
+    value_metrics = pandas.io.json.json_normalize(value_metrics)
+
+    return value_metrics
+
 
 #get data from bloomberg
 def get_data(url):
@@ -30,14 +77,15 @@ def get_data(url):
 	result = pandas.DataFrame([result])
 	return result
 
-sandbox = "https://sandbox.iexapis.com"
 
-sb_api_key = "Tpk_db75edaa9a9b4b2891dff83893eff6d6"
+today = datetime.date.today()
 
-production = "https://cloud.iexapis.com/"
 
-prod_api_key = "pk_1de77928d18b46e1b733bfa018321964"
+path = os.getcwd()
 
+today = datetime.date.today()
+
+path = os.getcwd()
 
 base = datetime.datetime.today()
 
@@ -99,13 +147,22 @@ print(len(ticker_ary), len(marketCap), len(peRatio), len(price), len(debt), len(
 
 fin_analysis = pandas.DataFrame({"ticker": ticker_ary, "epsEstimate": epsEstimate, "marketCap": marketCap, "peRatio": peRatio, "price": price, "debt": debt, "priceToSales": priceToSales , "priceToBook" : priceToBook, "sharesOutstanding" : sharesOutstanding, "day5ChangePercent" : day5ChangePercent})
 
-fin_analysis["epsEstimate"] = fin_analysis["epsEstimate"].fillna(value = -1)
-fin_analysis["price"] = fin_analysis["price"].fillna(value = -1)
-fin_analysis["peRatio"] = fin_analysis["peRatio"].fillna(value = -1)
-fin_analysis["priceToBook"] = fin_analysis["priceToBook"].fillna(value = -1)
-fin_analysis["priceToSales"] = fin_analysis["priceToSales"].fillna(value = -1)
-fin_analysis["debt"] = fin_analysis["debt"].fillna(value = -1)
-fin_analysis["day5ChangePercent"] = fin_analysis["day5ChangePercent"].fillna(value = -1)
+# fin_analysis["epsEstimate"] = fin_analysis["epsEstimate"].fillna(value = -1)
+# fin_analysis["price"] = fin_analysis["price"].fillna(value = -1)
+# fin_analysis["peRatio"] = fin_analysis["peRatio"].fillna(value = -1)
+# fin_analysis["priceToBook"] = fin_analysis["priceToBook"].fillna(value = -1)
+# fin_analysis["priceToSales"] = fin_analysis["priceToSales"].fillna(value = -1)
+# fin_analysis["debt"] = fin_analysis["debt"].fillna(value = -1)
+# fin_analysis["day5ChangePercent"] = fin_analysis["day5ChangePercent"].fillna(value = -1)
+
+
+fin = fin_analysis[fin_analysis["epsEstimate"] > 0 ]
+fin = fin_analysis[(fin_analysis["price"] < 50) & (fin_analysis["price"] > 0)]
+fin = fin_analysis[(fin_analysis["peRatio"] < 11) & (fin_analysis["peRatio"] != -1)]
+fin = fin_analysis[fin_analysis["priceToBook"] < 10]
+fin = fin_analysis[fin_analysis["priceToSales"] < 10 & (fin_analysis["priceToSales"] > 0)]
+fin = fin_analysis[fin_analysis["debt"] > 0]
+fin = fin_analysis[fin_analysis["day5ChangePercent"] > 0]
 
 
 
