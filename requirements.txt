@@ -92,5 +92,5 @@ Werkzeug==1.0.0
 widgetsnbextension==3.5.1
 wrapt==1.12.1
 yahoo-earnings-calendar==0.5.2
-zipp==0.6.0
+zipp==3.1.0
 zope.interface==4.7.1
