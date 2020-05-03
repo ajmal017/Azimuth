@@ -1,2 +1,2 @@
 # Azimuth
-Azimuth is the trading system used by CardinalPoint Capital
+Azimuth is an analysis engine for the US Stock Exchange and Global Commidities markets.
